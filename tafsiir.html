@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/tafsiir.css">
+    <style>
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+   <div class="container" dir="rtl" lang="ar">
+   
+    
+   
+    
+
+
+ 
+
+
+   </div>
+
+    <script>
+
+let containerr = document.querySelector(".container")
+
+ let url = window.location.href;
+ let urvarible = url.split("?")
+
+ let exectesURH = urvarible[1].split("=")
+  // labo noqday kaaas
+  // let exectesURH = urvarible[1].split("=") //  1 id : baa ku jira
+
+ let ayahcounter  = 0
+
+  const BuildonDom =(suraTxt,SurhNumper)=> {
+    if(ayahcounter <1 ){
+    let ayhsplitt = suraTxt.split("بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ")
+    console.log(ayhsplitt)
+  
+    containerr.innerHTML += `<div id="bisinka">  <a href="#"  dir="rtl"> بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ /a></div> `
+    containerr.innerHTML += `<<div style="padding-bottom: 450px;" id="bisinka"> ${ayhsplitt[1]} <a href="#"  dir="rtl"> 
+        <span id="ayah-num">${SurhNumper}</span>
+        
+        </a></div> `
+    }else {
+
+        containerr.innerHTML += `
+        <div id="bisinka">  <a href="#"  dir="rtl">/a></div> `
+    containerr.innerHTML += `<<div style="padding-bottom: 450px;" id="bisinka"> ${suraTxt} <a href="#"  dir="rtl"> 
+        <span id="ayah-num">${SurhNumper}</span>
+
+        `
+        
+        
+
+    }
+
+         
+
+  }
+
+
+ console.log(exectesURH)
+ console.log(urvarible)//
+
+ const reading = async(num)=> {
+    let responce = await fetch(`http://api.alquran.cloud/v1/surah/${num}`)
+    let suraha = await responce.json();
+     console.log(suraha)
+    suraha.data
+.ayahs
+.forEach(sur => {
+        console.log(sur)
+        BuildonDom(sur.text , sur.number
+
+)
+        
+    });
+   
+        
+    
+
+    
+
+ }
+ 
+ reading(exectesURH[1])
+
+
+
+    </script>
+</body>
+</html>

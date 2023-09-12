@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quraan-clone</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="quraan-img">
+        <img src="/images/quran.png">
+
+
+    </div>
+
+    <h1 class="noble">The Nolbe Quraan</h1>
+    <div class="search-city">
+        <input type="text" name="serch" id="serch" placeholder="search" autocomplete="off">
+    
+    </div>
+
+    <img src="/loader.gif" id="loader">
+
+
+    <div class="container" dir="ltr" lang="eng">
+       
+    
+
+    </div>
+
+
+
+    <script>
+
+
+
+    const container = document.querySelector(".container")
+    const loader = document.querySelector("#loader") 
+    const surhinfo = document.querySelector(".surh-info")
+    const eng = document.querySelector("#surh-english")
+    const arb = document.querySelector("#surh-arapi")
+    const aayahnum = document.querySelector("#aayah-num")
+
+
+
+
+    // kani waa in dsign sameeys marka arry ku samysay    2
+
+    const buildongdom= (suraArpic , suraEnglish, surnump)=> {
+
+        container.innerHTML += `
+
+            
+        <div class="surh-info">
+            <div class="surah-names">
+                <a href="http://127.0.0.1:5500/tafsiir.html?id=${surnump}" id="surh-english">${suraEnglish}</a>
+                <a href="http://127.0.0.1:5500/tafsiir.html?id =${surnump}" id="surh-arapi">${suraArpic}</a>
+            </div>
+            
+            <span id="aayah-num">${surnump}</span>
+        </div>
+       
+        `
+
+
+
+    }
+
+
+
+
+
+    /// surata inaa soo bandhigto waaaayeh tan   3 
+    const serchSurha = (e)=> {
+
+        // kain waxuu sheegaya design aaa so samysay buu qeexaya
+        const surhinfo = document.querySelectorAll(".surh-info") 
+       // console.log(surhinfo)
+       
+  // kanib waaa input waxa ku jira raadinaysaa 
+
+        let term = event.target.value.toLowerCase()
+
+        surhinfo.forEach((surah) => {
+
+           console.log(surah)
+            let surarapic = surah.querySelector("#surh-arapi").innerText.toLowerCase()
+
+            console.log(surarapic)
+            let sureng = surah.querySelector("#surh-english").innerText.toLowerCase()
+
+            console.log(sureng)
+
+            if(sureng.indexOf(term) > -1  || surarapic.indexOf(term) > -1){
+                surah.style.display = "flex"
+            } else {
+                surah.style.display = "none"
+            }
+            console.log(surah)
+        })
+        console.log(term)
+
+    }
+
+
+   //   // suradah dhan baa so bandhigysaaab    1
+    const GetallSurah = async()=> {
+        loader.style.display ="block"
+
+        let responce = await fetch("http://api.alquran.cloud/v1/quran/quran-uthmani");
+
+
+         let surah = await responce.json();
+         loader.style.display ="none"
+         surah.data.surahs.forEach(sura => {
+          //  console.log(sura)
+            buildongdom( sura.name,sura.englishName
+   , sura.number
+
+
+
+)
+            
+
+           
+
+            
+        });
+
+
+
+
+
+    }
+    // suradah dhan baa so bandhigysaaab
+
+    GetallSurah()
+
+
+
+   
+    // surata inaa soo bandhigto waaaayeh tan    3
+
+    document.addEventListener("input" ,serchSurha)    
+    
+
+
+
+
+    </script>
+    
+</body>
+</html>
